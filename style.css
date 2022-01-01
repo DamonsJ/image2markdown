@@ -1,0 +1,139 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 10px;
+    background: #f1f1f1;
+    height: 100%;
+  }
+  
+  /* 页眉/Blog 标题 */
+  .header {
+    padding: 30px;
+    text-align: center;
+    background: white;
+  }
+  
+  .header h1 {
+    font-size: 30px;
+  }
+  
+  /* 设置上导航栏的样式 */
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  /* 设置 topnav 链接的样式 */
+  .topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* 改变鼠标悬停时的颜色 */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* 创建两个不相等的彼此并排的浮动列 */
+  /* 左列 */
+  .leftcolumn {   
+    float: left;
+    width: 55%;
+    min-height: 100%;
+  }
+  
+  /* 右列 */
+  .rightcolumn {
+    float: left;
+    width: 45%;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+    min-height: 100%;
+  }
+  
+  /* 伪图像 */
+  .fakeimg {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 0px;
+    height: auto;
+    min-height: 800px;
+  }
+  
+  /* 为文章添加卡片效果 */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* 清除列之后的浮动 */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    min-height: 100%;
+  }
+  
+  /* 页脚 */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+    /* position: fixed; */
+    z-index:9999;
+    width: 100%;
+    bottom: 10px;
+  }
+  
+  .button {
+    background-color: #4CAF50; /* 绿色 */
+    border: none;
+    color: white;
+    padding: 14px 36px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    opacity: 1.0;
+  }
+  .button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    opacity: 0.8;
+  }
+  .button1 {background-color: #101585; }
+  .button2 {background-color: #4c9baf; }
+  .button3 {background-color: #7a60d8; }
+  .buttondiv {
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+  }
+  /* 响应式布局 - 当屏幕的宽度小于 800 像素时，使两列堆叠而不是并排 */
+  @media screen and (max-width: 800px) {
+    .leftcolumn, .rightcolumn {   
+      width: 100%;
+      padding: 0;
+    }
+  }
+  
+  /* 响应式布局 - 当屏幕的宽度小于 400 像素时，使导航链接堆叠而不是并排 */
+  @media screen and (max-width: 400px) {
+    .topnav a {
+      float: none;
+      width: 100%;
+    }
+  }
