@@ -7,14 +7,18 @@ function imageLoaded() {
     
     var reads = new FileReader();
     reads.onload = function(e) {
+        tw = document.getElementById('image_frame').width;
+        th = document.getElementById('image_frame').height;
+        console.log("tw width", tw);
+        console.log("th height", th);
 
         var img = document.createElement("img");
         img.onload = function(event) {
             var canvas = document.createElement('canvas');
             var ctx = canvas.getContext("2d");
 
-            var MAX_WIDTH = 600;
-            var MAX_HEIGHT = 800;
+            var MAX_WIDTH = tw;
+            var MAX_HEIGHT = th;
        
             ctx.drawImage(img, 0, 0);
 
@@ -46,6 +50,7 @@ function imageLoaded() {
             ctx2.drawImage(img, 0, 0, width, height);
             
             var dataurl = canvas.toDataURL("image/png");
+            $("#image_frame").css("opacity", 1.0); 
             document.getElementById('image_frame').src = dataurl; 
         };
         img.src = this.result;

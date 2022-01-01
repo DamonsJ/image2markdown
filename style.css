@@ -68,7 +68,12 @@ body {
     height: auto;
     min-height: 800px;
   }
-  
+  .img {
+    height:100%;
+    width:100%;
+    min-height:800px;
+    opacity: 0;
+  }
   /* 为文章添加卡片效果 */
   .card {
     background-color: white;
