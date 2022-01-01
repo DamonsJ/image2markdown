@@ -52,6 +52,9 @@ function imageLoaded() {
             var dataurl = canvas.toDataURL("image/png");
             $("#image_frame").css("opacity", 1.0); 
             document.getElementById('image_frame').src = dataurl; 
+
+            markdown = "[img1]:" + dataurl;
+            document.getElementById('markdown_area').value = markdown; 
         };
         img.src = this.result;
     };
@@ -60,4 +63,18 @@ function imageLoaded() {
 
 function uploadImage(){
     document.getElementById("imgupload").click(); 
+}
+
+function onConvert() {
+
+}
+
+function onCopy() {
+    var input = document.createElement('textarea');
+    input.innerHTML = document.getElementById('markdown_area').value;
+    document.body.appendChild(input);
+    input.select();
+    var result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
 }

@@ -20,21 +20,22 @@
   <a href="#" style="float:right">Link</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="./function.js"></script>
+
 <div class="row">
   <div class="leftcolumn">
     <div class="card">
-      <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-      <script language="JavaScript" type="text/javascript" src="./function.js"></script>
         <div class="buttondiv">
           <!-- <input type="file" id="file" class="button button1" onchange="changepic(this)" accept="image/jpg,image/jpeg,image/png,image/PNG"> -->
           <label for="image">
           <input type="file" id="imgupload" style="display:none" onchange="imageLoaded(this)" accept="image/bmp,image/jpg,image/jpeg,image/png,image/PNG"/>
           <button class="button button1", id="OpenImgUpload", onclick="uploadImage()">上传图像</button>
           </label>
-          <!-- <button class="button button1", onclick="uploadImage()">上传图像</button> -->
           <button class="button" id = "demo">文字</button>
           <button class="button button2">公式</button>
           <button class="button button3">图像</button>
+          <button class="button button4", id="convert_btn", onclick="onConvert()">转换</button>
         </div>
         <div class="fakeimg">
           <img src="#" id="image_frame" class="img"/>
@@ -43,7 +44,8 @@
   </div>
   <div class="rightcolumn">
     <div class="card">
-      <div class="fakeimg" style="height:200px;">Image</div>
+     <button class="button button5", id="copy_btn", onclick="onCopy()">一键复制</button>
+      <textarea class="markdown" readonly="readonly" id="markdown_area"></textarea>
     </div>
   </div>
 </div>

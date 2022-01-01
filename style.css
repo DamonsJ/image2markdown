@@ -74,6 +74,13 @@ body {
     min-height:800px;
     opacity: 0;
   }
+  .markdown {
+    height:100%;
+    width:100%;
+    min-height:800px;
+    font-size: 18px;
+    font-family: "微软雅黑";
+  }
   /* 为文章添加卡片效果 */
   .card {
     background-color: white;
@@ -122,11 +129,14 @@ body {
   .button1 {background-color: #101585; }
   .button2 {background-color: #4c9baf; }
   .button3 {background-color: #7a60d8; }
+  .button4 {background-color: #0c0230; }
+  .button5 {background-color: #ce83dd; }
   .buttondiv {
     display: flex;
     align-items: center;
     justify-content:space-around;
   }
+  
   /* 响应式布局 - 当屏幕的宽度小于 800 像素时，使两列堆叠而不是并排 */
   @media screen and (max-width: 800px) {
     .leftcolumn, .rightcolumn {   
