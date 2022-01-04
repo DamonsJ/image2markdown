@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png" href="markdown.png">
 <title>Image To MarkDown</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,13 +33,16 @@
           <input type="file" id="imgupload" style="display:none" onchange="imageLoaded(this)" accept="image/bmp,image/jpg,image/jpeg,image/png,image/PNG"/>
           <button class="button button1", id="OpenImgUpload", onclick="uploadImage()">上传图像</button>
           </label>
-          <button class="button" id = "demo">文字</button>
+          <button class="button" id = "demo" onclick="onDrawTextRect()">文字</button>
           <button class="button button2">公式</button>
           <button class="button button3">图像</button>
           <button class="button button4", id="convert_btn", onclick="onConvert()">转换</button>
         </div>
         <div class="fakeimg">
-          <img src="#" id="image_frame" class="img"/>
+          <script src="https://unpkg.com/konva@8.3.1/konva.min.js"></script>
+          <canvas id="image_canvas" class="imgcanvas">
+            <!-- <img src="#" id="image_frame" class="img"/> -->
+          </canvas>
         </div>
       </div>
   </div>
@@ -51,7 +55,8 @@
 </div>
 
 <div class="footer">
-  <h2>Footer</h2>
+  <h3>improve this with me :</h3>
+  <h3>shlkl99@163.com</h3>
 </div>
 
 </body>
