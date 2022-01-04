@@ -62,11 +62,37 @@ function handleMouseDown(e) {
     if (cur_mode == 2) {
         formula_left = startX;
         formula_top = startY;
+
+        var rect = new Konva.Rect({
+            x: startX,
+            y: startY,
+            width: 0,
+            height: 0,
+            stroke:'#4c9baf',
+            opacity:0.8,
+            strokeWidth: 4
+        });
+        cur_graph = rect;
+        formula_layer.add(rect);
+        formula_layer.draw();
     }
 
     if (cur_mode == 3) {
         image_left = startX;
         image_top = startY;
+
+        var rect = new Konva.Rect({
+            x: startX,
+            y: startY,
+            width: 0,
+            height: 0,
+            stroke:'#7a60d8',
+            opacity:0.8,
+            strokeWidth: 4
+        });
+        cur_graph = rect;
+        image_layer.add(rect);
+        image_layer.draw();
     }
 }
 
@@ -99,11 +125,6 @@ function handleMouseMove(e) {
     if (cur_mode == 1) {
         text_width = width;
         text_height = height;
-
-        cur_graph.setAttrs({
-            width: width,
-            height: height
-        });
     }
 
     if (cur_mode == 2) {
@@ -116,7 +137,10 @@ function handleMouseMove(e) {
         image_height = height;
     }
 
-    
+    cur_graph.setAttrs({
+        width: width,
+        height: height
+    });
 }
 
 function onDrawTextRect() {
@@ -127,6 +151,25 @@ function onDrawTextRect() {
         stage.add(text_layer);
     }
 }
+
+function onDrawFormulaRect() {
+    cur_mode = 2; // draw formula
+    console.log(" cur_mode = " + cur_mode);
+    if (stage) {
+        formula_layer = new Konva.Layer();
+        stage.add(formula_layer);
+    }
+}
+
+function onDrawImageRect() {
+    cur_mode = 3; // draw image
+    console.log(" cur_mode = " + cur_mode);
+    if (stage) {
+        image_layer = new Konva.Layer();
+        stage.add(image_layer);
+    }
+}
+
 function initKonvaStages()
 {
     stage.on("mousedown", handleMouseDown);
