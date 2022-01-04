@@ -22,6 +22,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://unpkg.com/konva@8.3.1/konva.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="./function.js"></script>
 
 <div class="row">
@@ -38,8 +39,7 @@
           <button class="button button3">图像</button>
           <button class="button button4", id="convert_btn", onclick="onConvert()">转换</button>
         </div>
-        <div class="fakeimg">
-          <script src="https://unpkg.com/konva@8.3.1/konva.min.js"></script>
+        <div class="fakeimg" id="canvas_div">
           <canvas id="image_canvas" class="imgcanvas">
             <!-- <img src="#" id="image_frame" class="img"/> -->
           </canvas>

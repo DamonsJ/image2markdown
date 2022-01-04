@@ -14,10 +14,11 @@ var image_width = 0;
 var image_height = 0;
 
 var cur_mode = 0;
-
-var canvas_global;
-var ctx_global;
-
+var stage;
+var text_layer;
+var formula_layer;
+var image_layer;
+var cur_graph;
 // calculate where the canvas is on the window
 // (used to help calculate mouseX/mouseY)
 var offsetX = 0;
@@ -31,12 +32,10 @@ var startX;
 var startY;
 
 function handleMouseDown(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+   
     // save the starting x/y of the rectangle
-    startX = parseInt(e.pageX - offsetX);
-    startY = parseInt(e.pageY - offsetY);
+    startX = e.evt.offsetX;
+    startY = e.evt.offsetY;
 
     console.log(" startX = " + startX);
     console.log(" startY = " + startY);
@@ -45,6 +44,19 @@ function handleMouseDown(e) {
     if (cur_mode == 1) {
         text_left = startX;
         text_top = startY;
+
+        var rect = new Konva.Rect({
+            x: startX,
+            y: startY,
+            width: 0,
+            height: 0,
+            stroke:'rgb(76, 175, 80)',
+            opacity:0.8,
+            strokeWidth: 4
+        });
+        cur_graph = rect;
+        text_layer.add(rect);
+        text_layer.draw();
     }
 
     if (cur_mode == 2) {
@@ -59,41 +71,39 @@ function handleMouseDown(e) {
 }
 
 function handleMouseUp(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
     // the drag is over, clear the dragging flag
     isDown = false;
+    console.log("================================================================ handleMouseUp ")
 }
 
 function handleMouseOut(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
     // the drag is over, clear the dragging flag
     isDown = false;
+    console.log("================================================================ handleMouseOut ")
 }
 
 function handleMouseMove(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
+   
     // if we're not dragging, just return
     if (!isDown) {
         return;
     }
  
-    // get the current mouse position
-    mouseX = parseInt(e.pageX - offsetX);
-    mouseY = parseInt(e.pageY - offsetY);
+    var width = e.evt.offsetX - startX;
+    var height = e.evt.offsetY - startY;
 
-    console.log(" mouseX = " + mouseX);
-    console.log(" mouseY = " + mouseY);
+    console.log(" width = " + width);
+    console.log(" height = " + height);
 
     // Put your mousemove stuff here
     if (cur_mode == 1) {
         text_width = width;
         text_height = height;
+
+        cur_graph.setAttrs({
+            width: width,
+            height: height
+        });
     }
 
     if (cur_mode == 2) {
@@ -106,51 +116,23 @@ function handleMouseMove(e) {
         image_height = height;
     }
 
-    ctx_global.clearRect(0, 0, canvas_global.width, canvas_global.height);
-
-    // calculate the rectangle width/height based
-    // on starting vs current mouse position
-    var width = mouseX - startX;
-    var height = mouseY - startY;
-
-    // draw a new rect from the start position 
-    // to the current mouse position
-    ctx_global.strokeRect(startX, startY, width, height);
-
-    // console.log(" width = " + width);
-    // console.log(" height = " + height);
+    
 }
 
 function onDrawTextRect() {
     cur_mode = 1; // draw text
     console.log(" cur_mode = " + cur_mode);
-
-    ctx_global.strokeStyle = "rgb(76, 175, 80)";
-    ctx_global.lineWidth = 3;
+    if (stage) {
+        text_layer = new Konva.Layer();
+        stage.add(text_layer);
+    }
 }
-
-function onInitCanvas() {
-
-    
-    var canvas = document.getElementById('image_canvas');
-    canvas_global = canvas;
-    // ctx_global = canvas.getContext("2d");
-
-    offsetX = canvas.offsetLeft;
-    offsetY = canvas.offsetTop;
-    scrollX = canvas.scrollLeft;
-    scrollY = canvas.scrollTop;
-
-    console.log(" offsetX = " + offsetX);
-    console.log(" offsetY = " + offsetY);
-    console.log(" scrollX = " + scrollX);
-    console.log(" scrollY = " + scrollY);
-
-    canvas.addEventListener('mousedown', handleMouseDown, false);
-    canvas.addEventListener('mouseup', handleMouseUp, false);
-    canvas.addEventListener('mousemove', handleMouseMove, false);
-    canvas.addEventListener('mouseout', handleMouseOut, false);
-
+function initKonvaStages()
+{
+    stage.on("mousedown", handleMouseDown);
+    stage.on("mouseup", handleMouseUp);
+    //stage.on("mouseout", handleMouseOut);
+    stage.on("mousemove", handleMouseMove);
 }
 
 function imageLoaded() {
@@ -165,9 +147,10 @@ function imageLoaded() {
         img.onload = function(event) {
             var canvas = document.getElementById('image_canvas');
             var ctx = canvas.getContext("2d");
-
+            
             var tw = canvas.getBoundingClientRect().width;
             var th = canvas.getBoundingClientRect().height;
+        
             console.log("tw width", tw);
             console.log("th height", th);
 
@@ -202,14 +185,42 @@ function imageLoaded() {
 
             var ctx2 = canvas.getContext("2d");
             ctx2.drawImage(img, 0, 0, width, height);
-            ctx_global = ctx2;
-
+        
             var dataurl = canvas.toDataURL("image/png");
 
             markdown = "[img1]:" + dataurl;
             document.getElementById('markdown_area').value = markdown; 
 
-            onInitCanvas();
+            stage = new Konva.Stage({
+                container: 'canvas_div',
+                width: width,
+                height: height,
+              });
+        
+            var layer = new Konva.Layer();
+            stage.add(layer);
+
+            var konva_image = new Konva.Image({
+                x: 0,
+                y: 0,
+                image: canvas,
+                width: width,
+                height: height
+              });
+            layer.add(konva_image);
+            layer.batchDraw();
+
+            offsetX = canvas.offsetLeft;
+            offsetY = canvas.offsetTop;
+            scrollX = canvas.scrollLeft;
+            scrollY = canvas.scrollTop;
+
+            console.log(" offsetX = " + offsetX);
+            console.log(" offsetY = " + offsetY);
+            console.log(" scrollX = " + scrollX);
+            console.log(" scrollY = " + scrollY);
+
+            initKonvaStages();
         };
         img.src = this.result;
     };
