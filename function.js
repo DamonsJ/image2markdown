@@ -1,17 +1,17 @@
-var text_left = 0;
-var text_top = 0;
-var text_width = 0;
-var text_height = 0;
+var text_left = [];
+var text_top = [];
+var text_width = [];
+var text_height = [];
 
-var formula_left = 0;
-var formula_top = 0;
-var formula_width = 0;
-var formula_height = 0;
+var formula_left = [];
+var formula_top = [];
+var formula_width = [];
+var formula_height = [];
 
-var image_left = 0;
-var image_top = 0;
-var image_width = 0;
-var image_height = 0;
+var image_left = [];
+var image_top = [];
+var image_width = [];
+var image_height = [];
 
 var cur_mode = 0;
 var stage;
@@ -42,8 +42,8 @@ function handleMouseDown(e) {
     // set a flag indicating the drag has begun
     isDown = true;
     if (cur_mode == 1) {
-        text_left = startX;
-        text_top = startY;
+        text_left.push(startX);
+        text_top.push(startY);
 
         var rect = new Konva.Rect({
             x: startX,
@@ -60,8 +60,8 @@ function handleMouseDown(e) {
     }
 
     if (cur_mode == 2) {
-        formula_left = startX;
-        formula_top = startY;
+        formula_left.push(startX);
+        formula_top.push(startY);
 
         var rect = new Konva.Rect({
             x: startX,
@@ -78,8 +78,8 @@ function handleMouseDown(e) {
     }
 
     if (cur_mode == 3) {
-        image_left = startX;
-        image_top = startY;
+        image_left.push(startX);
+        image_top.push(startY);
 
         var rect = new Konva.Rect({
             x: startX,
@@ -99,6 +99,21 @@ function handleMouseDown(e) {
 function handleMouseUp(e) {
     // the drag is over, clear the dragging flag
     isDown = false;
+    if (cur_mode == 1) {
+        text_width.push(width);
+        text_height.push(height);
+    }
+
+    if (cur_mode == 2) {
+        formula_width.push(width);
+        formula_height.push(height);
+    }
+
+    if (cur_mode == 3) {
+        image_width.push(width);
+        image_height.push(height);
+    }
+
     console.log("================================================================ handleMouseUp ")
 }
 
@@ -122,20 +137,20 @@ function handleMouseMove(e) {
     console.log(" height = " + height);
 
     // Put your mousemove stuff here
-    if (cur_mode == 1) {
-        text_width = width;
-        text_height = height;
-    }
+    // if (cur_mode == 1) {
+    //     text_width = width;
+    //     text_height = height;
+    // }
 
-    if (cur_mode == 2) {
-        formula_width = width;
-        formula_height = height;
-    }
+    // if (cur_mode == 2) {
+    //     formula_width = width;
+    //     formula_height = height;
+    // }
 
-    if (cur_mode == 3) {
-        image_width = width;
-        image_height = height;
-    }
+    // if (cur_mode == 3) {
+    //     image_width = width;
+    //     image_height = height;
+    // }
 
     cur_graph.setAttrs({
         width: width,
