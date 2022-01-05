@@ -30,6 +30,8 @@ var isDown = false;
 // these vars will hold the starting mouse position
 var startX;
 var startY;
+var width;
+var height;
 
 function handleMouseDown(e) {
    
@@ -130,8 +132,8 @@ function handleMouseMove(e) {
         return;
     }
  
-    var width = e.evt.offsetX - startX;
-    var height = e.evt.offsetY - startY;
+    width = e.evt.offsetX - startX;
+    height = e.evt.offsetY - startY;
 
     console.log(" width = " + width);
     console.log(" height = " + height);
@@ -290,7 +292,33 @@ function uploadImage(){
 }
 
 function onConvert() {
+    var obj = new Object();
+    obj.formula = new Object();
+    obj.formula.rects = [];
+    var len = formula_left.length;
+    for (let i = 0; i < len; i++) {
+        var rect = [formula_left[i],formula_top[i],formula_width[i],formula_height[i]];
+        obj.formula.rects.push(rect);
+    }
+    
+    obj.text = new Object();
+    obj.text.rects = [];
+    var lent = text_left.length;
+    for (let i = 0; i < lent; i++) {
+        var rect = [text_left[i],text_top[i],text_width[i],text_height[i]];
+        obj.text.rects.push(rect);
+    }
 
+    obj.image = new Object();
+    obj.image.rects = [];
+    var leni = image_left.length;
+    for (let i = 0; i < leni; i++) {
+        var rect = [image_left[i],image_top[i],image_width[i],image_height[i]];
+        obj.image.rects.push(rect);
+    }
+    var jsonString= JSON.stringify(obj);
+
+    console.log("jsonString: ", jsonString);
 }
 
 function onCopy() {
