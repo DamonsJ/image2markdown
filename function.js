@@ -12,6 +12,7 @@ var image_left = [];
 var image_top = [];
 var image_width = [];
 var image_height = [];
+var image_data;
 
 var cur_mode = 0;
 var stage;
@@ -115,14 +116,11 @@ function handleMouseUp(e) {
         image_width.push(width);
         image_height.push(height);
     }
-
-    console.log("================================================================ handleMouseUp ")
 }
 
 function handleMouseOut(e) {
     // the drag is over, clear the dragging flag
     isDown = false;
-    console.log("================================================================ handleMouseOut ")
 }
 
 function handleMouseMove(e) {
@@ -247,6 +245,7 @@ function imageLoaded() {
             ctx2.drawImage(img, 0, 0, width, height);
         
             var dataurl = canvas.toDataURL("image/png");
+            image_data = dataurl;
 
             markdown = "[img1]:" + dataurl;
             document.getElementById('markdown_area').value = markdown; 
@@ -319,6 +318,13 @@ function onConvert() {
     var jsonString= JSON.stringify(obj);
 
     console.log("jsonString: ", jsonString);
+
+    url = 'http://127.0.0.1:5000/convert?' + "rect="+jsonString + "&image="+image_data;
+    console.log("request : " + url);
+
+    fetch(url).then(res => {
+        console.log(res)
+    })
 }
 
 function onCopy() {
