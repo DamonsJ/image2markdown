@@ -319,10 +319,19 @@ function onConvert() {
 
     console.log("jsonString: ", jsonString);
 
-    url = 'http://127.0.0.1:5000/convert?' + "rect="+jsonString + "&image="+image_data;
+    url = 'http://127.0.0.1:5000/convert';
     console.log("request : " + url);
 
-    fetch(url).then(res => {
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            contentType: 'application/json'
+        },
+        body: {
+            rect: jsonString,
+            image: image_data
+        }
+    }).then(res => {
         console.log(res)
     })
 }
