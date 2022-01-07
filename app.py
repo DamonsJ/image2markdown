@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 @app.route("/convert", methods=["GET","POST"])
 def convert2MarkDown():
-    rect_json = request.args.get("rect")
-    image_data = request.args.get("image")
+    rect_json = request.form["rect"]
+    image_data = request.form["image"]
     
     img = Image.open(io.BytesIO(base64.decodebytes(bytes(image_data, "utf-8"))))
     img.save('test.png')
