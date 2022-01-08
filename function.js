@@ -40,8 +40,8 @@ function handleMouseDown(e) {
     startX = e.evt.offsetX;
     startY = e.evt.offsetY;
 
-    console.log(" startX = " + startX);
-    console.log(" startY = " + startY);
+    //console.log(" startX = " + startX);
+    //console.log(" startY = " + startY);
     // set a flag indicating the drag has begun
     isDown = true;
     if (cur_mode == 1) {
@@ -133,8 +133,8 @@ function handleMouseMove(e) {
     width = e.evt.offsetX - startX;
     height = e.evt.offsetY - startY;
 
-    console.log(" width = " + width);
-    console.log(" height = " + height);
+    // console.log(" width = " + width);
+    // console.log(" height = " + height);
 
     // Put your mousemove stuff here
     // if (cur_mode == 1) {
@@ -322,18 +322,35 @@ function onConvert() {
     url = 'http://127.0.0.1:5000/convert';
     console.log("request : " + url);
 
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    headers.append('Origin','http://127.0.0.1:5000');
+    headers.append('Access-Control-Allow-Origin','*');
+
+    let bytes = atob(image_data.split(',')[1])
+    let ab = new ArrayBuffer(bytes.length)
+    let ia = new Uint8Array(ab)
+    for (let i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i)
+    }
+    let blob = new Blob([ab], {type: 'image/png'})
+
+    let formData = new FormData();
+    formData.append("rect",jsonString);
+    formData.append("image",blob, new Date().getTime() + '.png');
+
     fetch(url, {
+        mode: 'no-cors',
+        credentials: 'include',
         method: 'POST',
-        headers: {
-            contentType: 'application/json'
-        },
-        body: {
-            rect: jsonString,
-            image: image_data
-        }
-    }).then(res => {
-        console.log(res)
+        headers: headers,
+        body: formData
     })
+    .then(response => response.json())
+    .then(data => {console.log('Success:', data);})
+    .then(json => console.log(json))
+    .catch((error) => {console.error('Error:', error)});
 }
 
 function onCopy() {
