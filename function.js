@@ -347,10 +347,9 @@ function onConvert() {
         headers: headers,
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {console.log('Success:', data);})
+    .then(response => {console.log(' success response:', response.json());})
     .then(json => console.log(json))
-    .catch((error) => {console.error('Error:', error)});
+    .catch((error) => {console.log('Error:', error)});
 }
 
 function onCopy() {
