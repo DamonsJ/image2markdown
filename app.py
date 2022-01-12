@@ -72,15 +72,15 @@ def convert2MarkDown():
     print(" rect_json ", rect_json)
 
     result = {"info" : "hello"}
-    # response = make_response(result, '200 OK')
-    # response.headers['Content-Type'] = 'application/json'
-    # response.headers["Access-Control-Allow-Origin"] = "*"
+    response = make_response(jsonify(result), 200)
+    response.headers['Content-Type'] = 'application/json'
+    response.headers["Access-Control-Allow-Origin"] = "*"
     # response.response = json.dumps(result)
-    response = app.response_class(
-        response=json.dumps(result),
-        status=200,
-        mimetype='application/json'
-    )
+    # response = app.response_class(
+    #     response=json.dumps(result),
+    #     status=200,
+    #     mimetype='application/json'
+    # )
     return response
 
 
