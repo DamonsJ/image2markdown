@@ -247,9 +247,9 @@ function imageLoaded() {
             var dataurl = canvas.toDataURL("image/png");
             image_data = dataurl;
 
-            markdown = "[img1]:" + dataurl;
-            markdown = "The diagram in Figure ```$1.21$``` explains the coefficient of ```$\\boldsymbol{B} .$``` Because ```$\\mathbf{u}$``` is constant, ```$\\mathbf{u}^{\\prime}=0 .$``` Hence,\n\n\\begin{aligned}\n0 &=\\cos \\theta T^{\\prime}+\\sin \\theta B^{\\prime} \\\\\n&=\\kappa \\cos \\theta N-\\tau \\sin \\theta N \\\\\n&=(\\kappa \\cos \\theta-\\tau \\sin \\theta) N\n\\end{aligned}\n\nThus, ```$\\kappa \\cos \\theta-\\tau \\sin \\theta=0$```, which gives ```$\\cot \\theta=\\tau / \\kappa .$``` Therefore, ```$\\tau / \\kappa$``` is constant since ```$\\theta$``` is."
-            document.getElementById('markdown_area').value = markdown; 
+            // markdown = "[img1]:" + dataurl;
+            // markdown = "The diagram in Figure ```$1.21$``` explains the coefficient of ```$\\boldsymbol{B} .$``` Because ```$\\mathbf{u}$``` is constant, ```$\\mathbf{u}^{\\prime}=0 .$``` Hence,\n\n\\begin{aligned}\n0 &=\\cos \\theta T^{\\prime}+\\sin \\theta B^{\\prime} \\\\\n&=\\kappa \\cos \\theta N-\\tau \\sin \\theta N \\\\\n&=(\\kappa \\cos \\theta-\\tau \\sin \\theta) N\n\\end{aligned}\n\nThus, ```$\\kappa \\cos \\theta-\\tau \\sin \\theta=0$```, which gives ```$\\cot \\theta=\\tau / \\kappa .$``` Therefore, ```$\\tau / \\kappa$``` is constant since ```$\\theta$``` is."
+            // document.getElementById('markdown_area').value = markdown; 
 
             stage = new Konva.Stage({
                 container: 'canvas_div',
@@ -324,10 +324,11 @@ function onConvert() {
     console.log("request : " + url);
 
     let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Accept', 'multipart/form-data');
     headers.append('Origin','http://127.0.0.1:5000');
-    headers.append('Access-Control-Allow-Origin','*');
+    // headers.append('Access-Control-Allow-Origin','*');
+    headers.append('Access-Control-Request-Headers','access-control-allow-origin,content-type');
 
     let bytes = atob(image_data.split(',')[1])
     let ab = new ArrayBuffer(bytes.length)
@@ -342,15 +343,26 @@ function onConvert() {
     formData.append("image",blob, new Date().getTime() + '.png');
 
     fetch(url, {
-        mode: 'no-cors',
-        credentials: 'include',
+        mode: 'cors',
+        credentials: 'omit',
         method: 'POST',
         headers: headers,
         body: formData
     })
-    .then(response => {console.log(' success response:', response.json());})
-    .then(json => console.log(json))
-    .catch((error) => {console.log('Error:', error)});
+    .then( async (response) => {
+        // get json response here
+        let data = await response.json();
+        reco = data["recognize"];
+        if(response.status === 200){
+         console.log("response ok : " + reco);
+         document.getElementById('markdown_area').value = reco; 
+        }else{
+            console.log("response failed : " + response.status)
+        }
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 }
 
 function onCopy() {

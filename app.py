@@ -7,8 +7,9 @@ import json
 import time
 import requests
 from config import *
-
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+CORS(app)
 
 def getFileLocation():
     folder = "./data/"
@@ -86,7 +87,8 @@ def recognize(json_info):
 def hello_world():  
     return "Hello World"  
 
-@app.route("/convert", methods=["POST"])
+@app.route("/convert", methods=["POST","OPTIONS"])
+@cross_origin()
 def convert2MarkDown():
     print("convert enter : ")
     print(request.form)
@@ -119,12 +121,14 @@ def convert2MarkDown():
     print(" image_name ", image_name)
     print(" rect_json ", rect_json)
     print(" reco_text ", reco_text)
-
+    # reco_text = "test"
     result = {"recognize" : reco_text}
     response = make_response(jsonify(result), 200)
     response.headers['Content-Type'] = 'application/json'
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    
+    response.headers["Access-Control-Request-Method"] = "GET,HEAD,OPTIONS,POST,PUT"
+    response.headers["Access-Control-Request-Headers"] = "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+
     return response
 
 
