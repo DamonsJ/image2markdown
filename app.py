@@ -45,7 +45,7 @@ def requestMathPix(image_path):
     data={
       "options_json": json.dumps({
         "math_inline_delimiters": ["```$", "$```"],
-        "math_display_delimiters":["", ""],
+        "math_display_delimiters":["```math", "```"],
         "rm_spaces": True
       })
     },
