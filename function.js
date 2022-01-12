@@ -248,6 +248,7 @@ function imageLoaded() {
             image_data = dataurl;
 
             markdown = "[img1]:" + dataurl;
+            markdown = "The diagram in Figure ```$1.21$``` explains the coefficient of ```$\\boldsymbol{B} .$``` Because ```$\\mathbf{u}$``` is constant, ```$\\mathbf{u}^{\\prime}=0 .$``` Hence,\n\n\\begin{aligned}\n0 &=\\cos \\theta T^{\\prime}+\\sin \\theta B^{\\prime} \\\\\n&=\\kappa \\cos \\theta N-\\tau \\sin \\theta N \\\\\n&=(\\kappa \\cos \\theta-\\tau \\sin \\theta) N\n\\end{aligned}\n\nThus, ```$\\kappa \\cos \\theta-\\tau \\sin \\theta=0$```, which gives ```$\\cot \\theta=\\tau / \\kappa .$``` Therefore, ```$\\tau / \\kappa$``` is constant since ```$\\theta$``` is."
             document.getElementById('markdown_area').value = markdown; 
 
             stage = new Konva.Stage({
