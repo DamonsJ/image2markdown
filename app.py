@@ -6,7 +6,9 @@ from PIL import Image
 import json
 import time
 
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+CORS(app)
 
 def getFileLocation():
     folder = "./data/"
@@ -42,9 +44,10 @@ def hello_world():
     return "Hello World"  
 
 @app.route("/convert", methods=["POST"])
+@cross_origin()
 def convert2MarkDown():
     print("convert enter : ")
-    print(request.form)
+    print("request form : ", request.form)
     rect_json = request.form["rect"]
 
     try:
@@ -71,16 +74,13 @@ def convert2MarkDown():
     print(" image_name ", image_name)
     print(" rect_json ", rect_json)
 
-    result = {"info" : "hello"}
+    result = {"recognize" : "test"}
     response = make_response(jsonify(result), 200)
     response.headers['Content-Type'] = 'application/json'
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    # response.response = json.dumps(result)
-    # response = app.response_class(
-    #     response=json.dumps(result),
-    #     status=200,
-    #     mimetype='application/json'
-    # )
+    response.headers["Access-Control-Request-Method"] = "GET,HEAD,OPTIONS,POST,PUT"
+    response.headers["Access-Control-Request-Headers"] = "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+
     return response
 
 

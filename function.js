@@ -323,10 +323,11 @@ function onConvert() {
     console.log("request : " + url);
 
     let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
     headers.append('Origin','http://127.0.0.1:5000');
-    headers.append('Access-Control-Allow-Origin','*');
+    // headers.append('Access-Control-Allow-Origin','*');
+    headers.append('Access-Control-Request-Headers','access-control-allow-origin,content-type');
 
     let bytes = atob(image_data.split(',')[1])
     let ab = new ArrayBuffer(bytes.length)
@@ -341,15 +342,26 @@ function onConvert() {
     formData.append("image",blob, new Date().getTime() + '.png');
 
     fetch(url, {
-        mode: 'no-cors',
-        credentials: 'include',
+        mode: 'cors',
+        credentials: 'omit',
         method: 'POST',
         headers: headers,
         body: formData
     })
-    .then(response => {console.log(' success response:', response.json());})
-    .then(json => console.log(json))
-    .catch((error) => {console.log('Error:', error)});
+    .then( async (response) => {
+        // get json response here
+        let data = await response.json();
+        reco = data["recognize"];
+        if(response.status === 200){
+         console.log("response ok : " + reco);
+         document.getElementById('markdown_area').value = reco; 
+        }else{
+            console.log("response failed : " + response.status)
+        }
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 }
 
 function onCopy() {
