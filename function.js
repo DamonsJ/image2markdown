@@ -320,13 +320,14 @@ function onConvert() {
 
     console.log("jsonString: ", jsonString);
 
-    url = 'http://127.0.0.1:5000/convert';
+    base_add = "http://0.0.0.0:5000"
+    url = base_add + "/convert";
     console.log("request : " + url);
 
     let headers = new Headers();
     // headers.append('Content-Type', 'multipart/form-data');
     // headers.append('Accept', 'multipart/form-data');
-    headers.append('Origin','http://127.0.0.1:5000');
+    headers.append('Origin',base_add);
     // headers.append('Access-Control-Allow-Origin','*');
     headers.append('Access-Control-Request-Headers','access-control-allow-origin,content-type');
 
