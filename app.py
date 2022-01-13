@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 def getFileLocation():
-    folder = "./data/"
+    folder = "../data/"
     t = time.time()
     cur_folder = int(round(t * 1000))
     folder = folder + str(cur_folder)
