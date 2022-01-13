@@ -91,7 +91,7 @@ def hello_world():
 @cross_origin()
 def convert2MarkDown():
     print("convert enter : ")
-    print(request.form)
+    print("request form : ", request.form)
     rect_json = request.form["rect"]
 
     try:

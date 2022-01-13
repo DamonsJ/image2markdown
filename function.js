@@ -324,7 +324,7 @@ function onConvert() {
     console.log("request : " + url);
 
     let headers = new Headers();
-    headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Content-Type', 'multipart/form-data');
     // headers.append('Accept', 'multipart/form-data');
     headers.append('Origin','http://127.0.0.1:5000');
     // headers.append('Access-Control-Allow-Origin','*');
