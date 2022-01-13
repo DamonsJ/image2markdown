@@ -320,7 +320,8 @@ function onConvert() {
 
     console.log("jsonString: ", jsonString);
 
-    base_add = "http://0.0.0.0:5000"
+    // base_add = "http://0.0.0.0:5000"
+    base_add = "http://101.43.136.164:5000"
     url = base_add + "/convert";
     console.log("request : " + url);
 
