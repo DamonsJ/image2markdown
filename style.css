@@ -67,6 +67,7 @@ body {
     padding: 0px;
     height: auto;
     min-height: 800px;
+    margin-top: 10px;
   }
   .img {
     height:100%;
@@ -86,6 +87,7 @@ body {
     min-height:800px;
     font-size: 18px;
     font-family: "微软雅黑";
+    margin-top: 10px;
   }
   /* 为文章添加卡片效果 */
   .card {
